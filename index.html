@@ -15,19 +15,19 @@
 <meta name="apple-mobile-web-app-title" content="DK Kasir" />
 <!-- ===================================================================== -->
 <style>
-  /* ── Tokens: dominan putih/broken-white + merah & hijau (identitas DAT KOFFIE) ── */
+  /* ── Tokens: putih bersih, merah & hijau — persis nuansa kartu MENU DAT KOFFIE ── */
   :root {
-    --bg: #f7f3ea;        /* broken white / cream, dasar halaman */
-    --surface: #ffffff;   /* putih bersih, kartu & panel */
-    --surface2: #f0e9da;  /* broken white lebih gelap, item/kartu sekunder */
-    --border: #e3d9c4;
-    --accent: #a6352b;    /* merah khas signage DAT KOFFIE — tombol utama */
-    --accent2: #c24a3d;   /* merah lebih terang, hover */
-    --green: #3f6b3f;     /* hijau dedaunan — angka positif & konfirmasi */
-    --green-light: #e7ede3;
-    --red: #b23a2e;       /* merah untuk error/hapus (senada dgn accent) */
-    --text: #2b2118;
-    --muted: #8a7960;
+    --bg: #ffffff;        /* putih bersih seperti kertas menu */
+    --surface: #ffffff;   /* kartu & panel */
+    --surface2: #faf7f2;  /* broken white lembut, item/kartu sekunder */
+    --border: #ece4d8;
+    --accent: #c1272d;    /* merah "MENU"/"DAT KOFFIE" — tombol utama */
+    --accent2: #db4b45;   /* merah lebih terang, hover */
+    --green: #1f6d4c;     /* hijau khas judul kategori & border logo */
+    --green-light: #e6f0ea;
+    --red: #c1272d;       /* merah untuk error/hapus (senada dgn accent) */
+    --text: #241a12;
+    --muted: #8c8072;
     --radius: 12px;
     --font: 'Segoe UI', system-ui, sans-serif;
   }
@@ -57,11 +57,14 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 32px 24px;
+    padding: 0 0 32px;
     width: 100%;
     max-width: 340px;
     text-align: center;
+    overflow: hidden;
   }
+  .login-card .checker-strip { margin-bottom: 24px; }
+  .login-card-body { padding: 0 24px; }
   .login-card img {
     width: 76px; height: 76px;
     border-radius: 18px;
@@ -89,7 +92,7 @@
   /* ── Header ── */
   header {
     background-color: var(--surface);
-    background-image: radial-gradient(circle, rgba(166,53,43,.10) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(193,39,45,.10) 1px, transparent 1px);
     background-size: 15px 15px;
     border-bottom: 1px solid var(--border);
     padding: 16px 20px;
@@ -108,10 +111,22 @@
     display: flex; align-items: center; justify-content: center;
     background: #fdf6e3;
   }
-  header .logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  header .logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
   header h1 { font-size: 17px; font-weight: 700; }
   header p { font-size: 12px; color: var(--muted); }
   header .header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+  /* Strip kotak-kotak merah/putih — motif taplak & pembatas menu DAT KOFFIE */
+  .checker-strip {
+    height: 8px;
+    width: 100%;
+    background-image:
+      linear-gradient(45deg, var(--accent) 25%, transparent 25%, transparent 75%, var(--accent) 75%, var(--accent)),
+      linear-gradient(45deg, var(--accent) 25%, transparent 25%, transparent 75%, var(--accent) 75%, var(--accent));
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+    background-color: #ffffff;
+  }
   .worker-badge {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -197,13 +212,12 @@
     gap: 4px;
     cursor: pointer;
     transition: all .2s;
-    box-shadow: 0 2px 8px rgba(43,33,24,.06);
+    box-shadow: 0 2px 8px rgba(36,26,18,.06);
   }
   .menu-card:active { transform: scale(.98); }
   .menu-card:hover { border-color: var(--accent); }
-  .menu-card-icon { font-size: 36px; margin-bottom: 4px; }
-  .menu-card-label { font-size: 17px; font-weight: 800; color: var(--text); }
-  .menu-card-sub { font-size: 12px; color: var(--muted); }
+  .menu-card-label { font-size: 26px; font-weight: 800; color: var(--text); }
+  .menu-card-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
   .panel-nav { margin: -4px 0 16px; }
   .back-btn {
@@ -218,9 +232,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 1px 3px rgba(43,33,24,.08);
+    box-shadow: 0 1px 3px rgba(36,26,18,.08);
   }
-  .back-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(166,53,43,.1); }
+  .back-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(193,39,45,.1); }
   .back-btn:active { transform: scale(.97); }
 
   /* ── Worker Picker ── */
@@ -237,7 +251,7 @@
     text-align: center;
     transition: all .15s;
   }
-  .worker-option.active { border-color: var(--accent); background: rgba(166,53,43,.12); color: var(--accent); }
+  .worker-option.active { border-color: var(--accent); background: rgba(193,39,45,.12); color: var(--accent); }
   .worker-option:active { opacity: .8; }
 
   /* ── Tabs ── */
@@ -448,7 +462,7 @@
     text-align: left;
     transition: all .12s;
   }
-  .product-chip:active { transform: scale(.96); background: rgba(166,53,43,.12); border-color: var(--accent); }
+  .product-chip:active { transform: scale(.96); background: rgba(193,39,45,.12); border-color: var(--accent); }
   .product-chip-name { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.3; }
   .product-chip-price { font-size: 13.5px; font-weight: 700; color: var(--accent); }
   .product-empty {
@@ -522,7 +536,7 @@
     cursor: pointer;
     line-height: 1;
   }
-  .qty-btn:active { background: rgba(166,53,43,.15); }
+  .qty-btn:active { background: rgba(193,39,45,.15); }
   .qty-value { font-size: 17px; font-weight: 700; min-width: 22px; text-align: center; }
   .cart-item-subtotal {
     grid-column: 2; grid-row: 2;
@@ -698,12 +712,15 @@
 <!-- Login Screen -->
 <div id="login-screen">
   <div class="login-card">
-    <img src="logo.png" alt="DAT KOFFIE" />
-    <h2>DAT KOFFIE</h2>
-    <p class="sub">Masukkan password untuk mengakses dashboard</p>
-    <input type="password" id="login-password" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter') attemptLogin()" />
-    <div class="login-error" id="login-error"></div>
-    <button class="submit-btn" onclick="attemptLogin()">Masuk</button>
+    <div class="checker-strip"></div>
+    <div class="login-card-body">
+      <img src="logo.png" alt="DAT KOFFIE" />
+      <h2>DAT KOFFIE</h2>
+      <p class="sub">Masukkan password untuk mengakses dashboard</p>
+      <input type="password" id="login-password" placeholder="Password" autocomplete="off" onkeydown="if(event.key==='Enter') attemptLogin()" />
+      <div class="login-error" id="login-error"></div>
+      <button class="submit-btn" onclick="attemptLogin()">Masuk</button>
+    </div>
   </div>
 </div>
 
@@ -721,17 +738,16 @@
     <button id="retry-btn" onclick="loadData()" title="Coba sambungkan ulang">🔄</button>
   </div>
 </header>
+<div class="checker-strip"></div>
 
 <!-- Menu Utama -->
 <div id="main-menu" class="main-menu">
   <div class="menu-card" onclick="showView('penjualan')">
-    <span class="menu-card-icon">🧾</span>
-    <span class="menu-card-label">Penjualan</span>
+    <span class="menu-card-label" style="color:var(--accent)">Penjualan</span>
     <span class="menu-card-sub">Catat transaksi &amp; cetak struk</span>
   </div>
   <div class="menu-card" onclick="showView('pengeluaran')">
-    <span class="menu-card-icon">📦</span>
-    <span class="menu-card-label">Pengeluaran</span>
+    <span class="menu-card-label" style="color:var(--green)">Pengeluaran</span>
     <span class="menu-card-sub">Catat pembelian bahan baku</span>
   </div>
 </div>

@@ -8,14 +8,11 @@ Sheet lewat Apps Script, bisa di-install sebagai aplikasi (PWA) di HP kasir.
 index.html      -> aplikasi utama (HTML+CSS+JS jadi satu file)
 manifest.json   -> deskripsi PWA (nama, ikon, warna)
 sw.js           -> service worker (bikin app bisa di-install & cache app shell)
-icon-192.png    -> ikon app 192x192 (placeholder — ganti dgn logo asli klien)
-icon-512.png    -> ikon app 512x512 (placeholder)
-logo.png        -> logo yang tampil di header & login screen (placeholder)
+icon-192.png    -> ikon app 192x192
+icon-512.png    -> ikon app 512x512
+logo.png        -> logo yang tampil di header & login screen
+Code.gs         -> backend Apps Script (paste ke Extensions → Apps Script di spreadsheet)
 ```
-
-⚠️ **Icon & logo saat ini masih placeholder** (lingkaran merah "DK"). Ganti
-`icon-192.png`, `icon-512.png`, dan `logo.png` dengan logo asli DAT KOFFIE
-(ukuran persegi, PNG transparan/latar solid) sebelum dipakai produksi.
 
 ## 1. Push ke GitHub
 
@@ -68,14 +65,57 @@ Struktur `index.html` sudah dipisah rapi jadi: **Tokens warna** (bagian
    sheet klien baru sama (kolom Settings: Produk/Harga di A-B, Worker di
    D, Bahan/Biaya di F-G, Pembayaran/Bank di I-J).
 
-## Palet warna saat ini (dari signage & interior DAT KOFFIE)
+## 6. Fitur Shift (penjaga yang sedang bertugas ikut tercatat)
+Setiap transaksi Penjualan sekarang ikut mencatat siapa penjaga yang
+sedang aktif (dipilih lewat badge "👤 Pilih Penjaga" di app) ke **kolom
+Shift** yang baru di sheet Penjualan.
+
+Struktur kolom Penjualan sekarang (lihat `Code.gs`):
+```
+A Tanggal | B Produk | C Jumlah | D Harga | E Diskon/Admin | F Total
+| G Pembayaran | H Bank | I Pembeli | J Kode Invoice | K Shift | L Periode (auto)
+```
+Karena ada kolom **K Shift** yang baru disisipkan, tabel **Performance**
+(Target/Customer) yang tadinya di kolom M/N ikut digeser ke **N/O**.
+Ini sudah disesuaikan di `Code.gs` (`PERFORMANCE_COL_TARGET = 14`,
+`PERFORMANCE_COL_CUSTOMER = 15`).
+
+**Wajib:** buka Apps Script project (Extensions → Apps Script) dari
+spreadsheet DAT KOFFIE, ganti/timpa seluruh isi `Code.gs` dengan file
+`Code.gs` di folder ini, lalu **Deploy → Manage deployments → Edit →
+New version** supaya perubahan aktif di URL exec yang sama (tidak perlu
+ganti `API_URL` di `index.html`).
+
+## 7. Tema warna & logo (update terbaru)
+Warna disesuaikan agar senada dengan kartu menu fisik DAT KOFFIE: dasar
+**putih bersih**, judul/tombol **merah** (`--accent`), dan aksen **hijau**
+(`--green`) untuk kategori Pengeluaran & elemen positif. Ditambahkan pula
+strip dekoratif kotak-kotak merah/putih (`.checker-strip`) di bawah header
+dan di kartu login, meniru motif garis bawah menu & taplak meja.
+
+Logo (`logo.png`) diganti jadi kotak hijau bergaris dengan teks
+"DAT KOFFIE" merah — meniru logo asli di menu. Ikon app (`icon-192.png`,
+`icon-512.png`) dibuat beda dari logo header: medali hijau "DK" dengan
+bingkai kotak-kotak merah/putih, supaya tetap mudah dikenali walau
+diperkecil jadi ikon HP.
+
+⚠️ Ini semua masih hasil generate otomatis (bukan file desain asli dari
+klien) — kalau DAT KOFFIE punya file logo resmi (vector/PNG transparan),
+sebaiknya ganti `logo.png`, `icon-192.png`, `icon-512.png` dengan itu.
+
+Setelah mengganti aset (logo/ikon/CSS) dan push ulang, ingat naikkan lagi
+versi `CACHE_NAME` di `sw.js` (lihat bagian 3) — sudah dinaikkan ke `v2`
+untuk update kali ini.
+
+## Palet warna saat ini (persis nuansa kartu MENU fisik DAT KOFFIE)
 | Token       | Hex       | Dipakai untuk                          |
 |-------------|-----------|-----------------------------------------|
-| `--bg`      | `#f7f3ea` | Latar halaman (broken white / cream)   |
-| `--surface` | `#ffffff` | Kartu, panel, form (putih bersih)      |
-| `--surface2`| `#f0e9da` | Kartu sekunder, item list               |
-| `--accent`  | `#a6352b` | Tombol utama, header, highlight (merah)|
-| `--green`   | `#3f6b3f` | Total/angka positif, konfirmasi (hijau)|
-| `--red`     | `#b23a2e` | Error, tombol hapus                     |
-| `--text`    | `#2b2118` | Teks utama                              |
-| `--muted`   | `#8a7960` | Teks sekunder / placeholder             |
+| `--bg`      | `#ffffff` | Latar halaman (putih bersih)           |
+| `--surface` | `#ffffff` | Kartu, panel, form                      |
+| `--surface2`| `#faf7f2` | Kartu sekunder, item list (broken white)|
+| `--accent`  | `#c1272d` | Tombol utama, header, highlight (merah)|
+| `--green`   | `#1f6d4c` | Total/angka positif, konfirmasi (hijau)|
+| `--red`     | `#c1272d` | Error, tombol hapus                     |
+| `--text`    | `#241a12` | Teks utama                              |
+| `--muted`   | `#8c8072` | Teks sekunder / placeholder             |
+

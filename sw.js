@@ -2,7 +2,7 @@
 // Menaikkan versi CACHE_NAME setiap kali index.html/aset diubah & di-push
 // ke GitHub, supaya kasir otomatis dapat versi terbaru (lihat listener
 // "controllerchange" di index.html yang me-reload halaman sekali).
-const CACHE_NAME = "datkoffie-kasir-v1";
+const CACHE_NAME = "datkoffie-kasir-v2";
 
 // App shell: file statis yang di-cache supaya app tetap bisa dibuka
 // (tampilan) walau koneksi internet lagi lemot/putus.
