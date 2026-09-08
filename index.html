@@ -927,7 +927,7 @@ const AUTH_KEY = "datkoffie_authed";
 
 // ─── Konfigurasi Print Struk (RawBT — printer thermal 58mm) ────
 const STORE_NAME = "DAT KOFFIE";
-const STORE_ADDRESS = "Jl. Cimandiri, [lengkapi alamat lengkap toko di sini]"; // TODO: lengkapi alamat
+const STORE_ADDRESS = "Jl. 3 srikandi blok A no. 9 lantai 1, Jatireja, Kec. Cikarang Tim., Kabupaten Bekasi"; // TODO: lengkapi alamat
 const RECEIPT_WIDTH = 32; // jumlah karakter per baris (pas untuk kertas 58mm). Kalau hasil print kepotong, coba naikkan ke 48. Kalau tulisan kegedean/tidak muat, turunkan ke 24.
 let lastStrukText = null; // menyimpan teks struk terakhir untuk fitur "Cetak Ulang"
 
@@ -1389,7 +1389,6 @@ function buildStrukText(items, adjType, adjValue, grandTotal, pembayaran, bank, 
   }
   out += line + "\n";
   out += centerText("Saran, kritik & kerjasama:", W) + "\n";
-  out += centerText("WA [nomor WA toko]", W) + "\n"; // TODO: isi nomor WA
   out += centerText("IG @datkoffie", W) + "\n"; // TODO: cek username IG resmi
   out += line + "\n";
   out += centerText("Terima kasih!", W) + "\n";
